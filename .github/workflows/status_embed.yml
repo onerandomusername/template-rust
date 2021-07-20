@@ -3,7 +3,7 @@ name: Status Embed
 on:
   workflow_run:
     workflows:
-    - Rustup
+    - Lint & Test
     types:
     - completed
 
@@ -11,7 +11,7 @@ jobs:
   status_embed:
     name: Send Status Embed to Discord
     runs-on: ubuntu-latest
-
+    if: always() && !${{ github.event.workflow_run.conclusion == 'cancelled' }}
     steps:
       # Process the artifact uploaded in the `pull_request`-triggered workflow:
     - name: Get Pull Request Information
